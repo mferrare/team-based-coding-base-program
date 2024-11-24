@@ -77,7 +77,7 @@ Y = 0.1 * X1 +
 Yhat = Y + rnorm(length(IDs), 0, mean(Y)*0.15)
 
 # Add additional errors to group B
-Yhat[which(groups=="B")] = Yhat[which(groups=="B")] + rnorm(obs_letters[which(group_vals=="B")], 0, 100)
+Yhat[which(groups=="B")] = Yhat[which(groups=="B")] + rnorm(obs_group[which(group_vals=="B")], 0, 100)
 
 
 # build data frame and re-name variables to intuitive names
@@ -444,7 +444,7 @@ tests_mat_raw[1, 1:3] = c(
     entry_base__time_fe
 )
 
-tests_mat_raw[2, 2:3] = c(
+tests_mat_raw[2, 1:2] = c(
     entry_time__time_fe,
     entry_fe__time_fe
 )
@@ -476,13 +476,13 @@ pval = anova_fe__time_fe_clean[6][[1]][2]
 entry = paste(round(val,2), ifelse(pval>0.1,"",ifelse(pval>0.05,"*", ifelse(pval>0.01,"**", "***"))),sep="")     
 entry_fe__time_fe = entry
 
-tests_mat_clean[1, 2:4] = c(
+tests_mat_clean[1, 1:3] = c(
     entry_base__time,
     entry_base__fe,
     entry_base__time_fe
 )
 
-tests_mat_clean[2, 3:4] = c(
+tests_mat_clean[2, 1:2] = c(
     entry_time__time_fe,
     entry_fe__time_fe
 )
