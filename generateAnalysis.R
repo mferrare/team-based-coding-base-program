@@ -2,7 +2,7 @@
 generateAnalysis = function() {
     
     # read in data
-    data = read.csv(here("data", "data.csv"))
+    data = read.csv(createPath("/data/data.csv"))
 
     # Base regressions
     reg_base = lm(OUTPUT_TONNES ~ RAINFALL_PERCENTILE + LABOUR_DAYS + IRRIGATION_BOOLEAN, data=data)
@@ -53,4 +53,55 @@ generateAnalysis = function() {
     bic_reg_fe_clean = BIC(reg_fe_clean)
     bic_reg_time_fe_clean = BIC(reg_time_fe_clean)
 
+    save(
+         reg_base,
+        reg_time,
+        reg_fe,
+        reg_time_fe,
+
+        #remove region B as outlier
+        data_clean,
+
+        # Clean regressions
+        reg_base_clean,
+        reg_time_clean,
+        reg_fe_clean,
+        reg_time_fe_clean,
+        
+        # Anova tests (nested models)
+        anova_base__time_raw,
+        anova_base__fe_raw,
+        anova_base__time_fe_raw,
+        anova_fe__time_fe_raw,
+        anova_time__time_fe_raw,
+
+        anova_base__time_clean,
+        anova_base__fe_clean,
+        anova_base__time_fe_clean,
+        anova_fe__time_fe_clean,
+        anova_time__time_fe_clean,
+
+        #AIC and BIC values for cleaned versus raw
+        aic_reg_base_raw,
+        aic_reg_time_raw,
+        aic_reg_fe_raw,
+        aic_reg_time_fe_raw,
+
+        aic_reg_base_clean,
+        aic_reg_time_clean,
+        aic_reg_fe_clean,
+        aic_reg_time_fe_clean,
+
+        bic_reg_base_raw,
+        bic_reg_time_raw,
+        bic_reg_fe_raw,
+        bic_reg_time_fe_raw,
+
+        bic_reg_base_clean,
+        bic_reg_time_clean,
+        bic_reg_fe_clean,
+        bic_reg_time_fe_clean,
+
+        file=createPath("/results/temp_results.Rdata")
+    )
 }

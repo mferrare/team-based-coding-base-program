@@ -29,9 +29,10 @@
 base_path = getwd()
 
 # source local utilities
-source(paste(base_path,"/generateData.r", sep=""))
-source(paste(base_path,"/writeData.r", sep=""))
-source(paste(base_path,"/generateAnalysis.R", sep=""))
+source(paste(base_path,"/createPath.r", sep=""))
+source(createPath("/generateData.r"))
+source(createPath("/writeData.r"))
+source(createPath("/generateAnalysis.R"))
 
 ####### Generate data ########
 generateData()
@@ -40,7 +41,7 @@ generateData()
 generateAnalysis()
 
 ######## Summary tables ##########
-
+load(createPath("/results/temp_results.Rdata"))
 # Regression tables need to include all possible vars in data
 # Can check this by getting the model matrices and building a unique set of vars
 
@@ -367,29 +368,29 @@ tests_mat_clean[2, 1:2] = c(
 ######## Write results to file ##########
 
 #check directory is present first
-if(!dir.exists(here("results"))){
-    dir.create(here("results"))
+if(!dir.exists(createPath("/results"))){
+    dir.create(createPath("/results"))
 }
 
-file_path = here("results", "regression_table_raw.csv")
+file_path = createPath("/results/regression_table_raw.csv")
 if(file.exists(file_path)){
     file.remove(file_path)
 } 
 write.csv(outmat_raw,file_path, row.names=TRUE)
 
-file_path = here("results", "regression_table_clean.csv")
+file_path = createPath("/results/regression_table_clean.csv")
 if(file.exists(file_path)){
     file.remove(file_path)
 } 
 write.csv(outmat_clean,file_path, row.names=TRUE)
 
-file_path = here("results", "anova_table_raw.csv")
+file_path = createPath("/results/anova_table_raw.csv")
 if(file.exists(file_path)){
     file.remove(file_path)
 } 
 write.csv(tests_mat_raw,file_path, row.names=TRUE)
 
-file_path = here("results", "anova_table_clean.csv")
+file_path = createPath("/results/anova_table_clean.csv")
 if(file.exists(file_path)){
     file.remove(file_path)
 } 
